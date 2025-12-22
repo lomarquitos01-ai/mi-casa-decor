@@ -50,7 +50,7 @@ const RestauradorPage = () => {
   const specifications = [
     { label: "Composición", value: "Nano silicona" },
     { label: "Área de uso", value: "1 botella puede cubrir 3 a 5m²" },
-    { label: "Capacidad", value: "50ml / 160ml" },
+    { label: "Capacidad", value: "160ml" },
     { label: "Color del producto", value: "Transparente" },
     { label: "Vida útil", value: "3 años (cerrado), protección 3 a 5 años" },
     { label: "Almacenamiento", value: "Lugar fresco y seco" },
@@ -104,8 +104,9 @@ const RestauradorPage = () => {
                 </div>
 
                 <div className="flex items-baseline gap-4">
-                  <span className="text-3xl font-light text-foreground">29,99 €</span>
-                  <span className="text-lg text-muted-foreground line-through">49,99 €</span>
+                  <span className="text-3xl font-light text-foreground">37,99 €</span>
+                  <span className="text-lg text-muted-foreground line-through">59,99 €</span>
+                  <span className="text-sm text-muted-foreground">160ml</span>
                 </div>
 
                 <div className="flex items-center gap-2 text-green-600">
