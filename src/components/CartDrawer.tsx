@@ -28,8 +28,14 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     try {
       const checkoutUrl = await createCheckout();
       if (checkoutUrl) {
-        // Usar location.href para evitar bloqueio de popup
-        window.location.href = checkoutUrl;
+        // Criar um link e clicar nele - funciona melhor em mobile
+        const link = document.createElement('a');
+        link.href = checkoutUrl;
+        link.target = '_self';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       } else {
         toast.error('Error al crear el checkout');
       }
