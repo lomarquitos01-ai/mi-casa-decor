@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/stores/cartStore";
+import { useCartStore, CartItem } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { Check, Droplets, Shield, Sparkles, Clock, ShoppingCart } from "lucide-react";
 import { Header } from "@/components/Header";
@@ -10,9 +10,53 @@ import usageImage from "@/assets/products/restaurador-usage-2.jpg";
 import specImage from "@/assets/products/restaurador-spec-2.jpg";
 
 const RestauradorPage = () => {
-  const { openCart } = useCartStore();
+  const { addItem, openCart } = useCartStore();
 
   const handleAddToCart = () => {
+    const cartItem: CartItem = {
+      product: {
+        node: {
+          id: "gid://shopify/Product/15474385453388",
+          title: "Restaurador de Mármol y Granito Nano Cristal",
+          description: "Restaurador profesional para mármoles, granitos y superficies de piedra natural",
+          handle: "restaurador-de-marmol-y-granito-nano-cristal",
+          productType: "Limpieza",
+          priceRange: {
+            minVariantPrice: {
+              amount: "37.99",
+              currencyCode: "EUR"
+            }
+          },
+          images: {
+            edges: [{
+              node: {
+                url: heroImage,
+                altText: "Restaurador de Mármol y Granito"
+              }
+            }]
+          },
+          variants: {
+            edges: [{
+              node: {
+                id: "gid://shopify/ProductVariant/56303403401548",
+                title: "160ml",
+                price: { amount: "37.99", currencyCode: "EUR" },
+                availableForSale: true,
+                selectedOptions: [{ name: "Tamaño", value: "160ml" }]
+              }
+            }]
+          },
+          options: [{ name: "Tamaño", values: ["160ml"] }]
+        }
+      },
+      variantId: "gid://shopify/ProductVariant/56303403401548",
+      variantTitle: "160ml",
+      price: { amount: "37.99", currencyCode: "EUR" },
+      quantity: 1,
+      selectedOptions: [{ name: "Tamaño", value: "160ml" }]
+    };
+
+    addItem(cartItem);
     toast.success("Producto añadido al carrito", {
       description: "Restaurador de Mármoles y Granitos - 160ml",
       position: "top-center",
