@@ -111,14 +111,14 @@ const RestauradorPage = () => {
       
       <main>
         {/* Hero Section - Full Width Image with Overlay */}
-        <section className="relative min-h-screen md:min-h-[90vh] flex items-end md:items-center pb-8 md:pb-0">
+        <section className="relative min-h-[100svh] md:min-h-[90vh] flex items-end md:items-center pb-8 md:pb-0">
           <div className="absolute inset-0">
             <img
               src={heroImage}
               alt="Restaurador de Mármoles y Granitos"
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-[center_30%] md:object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-charcoal/95 via-charcoal/80 to-charcoal/50 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-charcoal/95 via-charcoal/70 to-charcoal/30 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
           </div>
           
           <div className="relative container-wide py-6 md:py-24 pt-28 md:pt-24 px-4 md:px-8">
