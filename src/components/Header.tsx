@@ -25,7 +25,7 @@ export const Header = () => {
         <div className="bg-foreground text-background">
           <div className="container-wide py-2 text-center">
             <p className="text-xs tracking-[0.2em] uppercase">
-              Envío gratuito en compras superiores a €99
+              Envío gratuito en todas las compras
             </p>
           </div>
         </div>
