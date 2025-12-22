@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Minus, Plus, Loader2, Truck } from 'lucide-react';
 import { fetchProductByHandle, formatPrice, ShopifyProduct } from '@/lib/shopify-api';
@@ -20,9 +20,9 @@ const ProductPage = () => {
 
   const { addItem, openCart } = useCartStore();
 
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  // Scroll to top immediately before paint
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [handle]);
 
   useEffect(() => {
