@@ -26,12 +26,10 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   const handleCheckout = async () => {
     try {
-      console.log('Iniciando checkout...');
       const checkoutUrl = await createCheckout();
-      console.log('Checkout URL:', checkoutUrl);
       if (checkoutUrl) {
-        window.open(checkoutUrl, '_blank');
-        onClose();
+        // Usar location.href para evitar bloqueio de popup
+        window.location.href = checkoutUrl;
       } else {
         toast.error('Error al crear el checkout');
       }
