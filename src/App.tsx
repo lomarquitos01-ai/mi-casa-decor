@@ -19,6 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/producto/restaurador-de-marmol-y-granito-nano-cristal" element={<RestauradorPage />} />
           <Route path="/producto/:handle" element={<ProductPage />} />
           <Route path="/restaurador" element={<RestauradorPage />} />
           <Route path="/cocina" element={<CategoryPage />} />
