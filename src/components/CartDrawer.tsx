@@ -11,7 +11,6 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   
   const {
@@ -26,18 +25,15 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const totalPrice = getTotalPrice();
   const currencyCode = 'EUR';
 
-  // Criar checkout diretamente aqui, sem usar o store
+  // Criar checkout e redirecionar diretamente
   const handleCreateCheckout = async () => {
-    console.log('=== CHECKOUT START ===');
-    console.log('Items count:', items.length);
-    console.log('Items:', JSON.stringify(items.map(i => ({ variantId: i.variantId, qty: i.quantity }))));
-    
     if (items.length === 0) {
       toast.error('El carrito está vacío');
       return;
     }
 
     setIsCreatingCheckout(true);
+    toast.loading('Creando checkout...', { id: 'checkout' });
 
     try {
       const checkoutItems = items.map(item => ({
@@ -45,25 +41,18 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
         quantity: item.quantity,
       }));
       
-      console.log('Calling createStorefrontCheckout with:', JSON.stringify(checkoutItems));
-      
       const url = await createStorefrontCheckout(checkoutItems);
       
-      console.log('Checkout URL received:', url);
-      
       if (url) {
-        setCheckoutUrl(url);
-        toast.success('¡Checkout creado!', {
-          description: 'Haz clic en "Ir al Checkout" para continuar',
-          duration: 5000,
-        });
+        toast.dismiss('checkout');
+        // Redirecionar diretamente em nova aba
+        window.open(url, '_blank');
       } else {
-        console.error('No URL returned');
-        toast.error('Error al crear el checkout');
+        toast.error('Error al crear el checkout', { id: 'checkout' });
       }
     } catch (error) {
       console.error('Checkout error:', error);
-      toast.error('Error: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      toast.error('Error: ' + (error instanceof Error ? error.message : 'Unknown error'), { id: 'checkout' });
     } finally {
       setIsCreatingCheckout(false);
     }
@@ -71,7 +60,6 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   // Limpar checkout URL quando o drawer fecha
   const handleClose = () => {
-    setCheckoutUrl(null);
     onClose();
   };
 
@@ -202,37 +190,24 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               Impuestos y envío calculados en el checkout
             </p>
             
-            {/* Mostrar link de checkout se disponível, senão botão para criar */}
-            {checkoutUrl ? (
-              <a
-                href={checkoutUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full h-12 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Ir al Checkout
-              </a>
-            ) : (
-              <Button
-                onClick={handleCreateCheckout}
-                size="lg"
-                className="w-full"
-                disabled={isCreatingCheckout}
-              >
-                {isCreatingCheckout ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Creando checkout...
-                  </>
-                ) : (
-                  <>
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Finalizar Compra
-                  </>
-                )}
-              </Button>
-            )}
+            <Button
+              onClick={handleCreateCheckout}
+              size="lg"
+              className="w-full"
+              disabled={isCreatingCheckout}
+            >
+              {isCreatingCheckout ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Procesando...
+                </>
+              ) : (
+                <>
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Finalizar Compra
+                </>
+              )}
+            </Button>
           </div>
         )}
       </div>
