@@ -27,13 +27,9 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   // Criar checkout e redirecionar diretamente
   const handleCreateCheckout = async () => {
-    if (items.length === 0) {
-      toast.error('El carrito está vacío');
-      return;
-    }
+    if (items.length === 0 || isCreatingCheckout) return;
 
     setIsCreatingCheckout(true);
-    toast.loading('Creando checkout...', { id: 'checkout' });
 
     try {
       const checkoutItems = items.map(item => ({
@@ -44,15 +40,11 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       const url = await createStorefrontCheckout(checkoutItems);
       
       if (url) {
-        toast.dismiss('checkout');
-        // Redirecionar diretamente em nova aba
-        window.open(url, '_blank');
-      } else {
-        toast.error('Error al crear el checkout', { id: 'checkout' });
+        // Redirecionar na mesma aba
+        window.location.href = url;
       }
     } catch (error) {
       console.error('Checkout error:', error);
-      toast.error('Error: ' + (error instanceof Error ? error.message : 'Unknown error'), { id: 'checkout' });
     } finally {
       setIsCreatingCheckout(false);
     }
