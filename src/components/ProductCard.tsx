@@ -49,16 +49,17 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   return (
     <Link
       to={`/producto/${node.handle}`}
-      className="group animate-fade-in-up"
+      className="group animate-fade-in-up block"
       style={{ animationDelay: `${index * 100}ms` }}
     >
       {/* Image */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-4">
+      <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-3 md:mb-4">
         {firstImage ? (
           <img
             src={firstImage.url}
             alt={firstImage.altText || node.title}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground">
@@ -66,8 +67,8 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
           </div>
         )}
 
-        {/* Quick Add overlay */}
-        <div className="absolute inset-0 flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {/* Quick Add overlay - hidden on mobile, visible on hover for desktop */}
+        <div className="absolute inset-0 hidden md:flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Button
             variant="premium"
             size="sm"
@@ -81,17 +82,30 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
       </div>
 
       {/* Info */}
-      <div className="space-y-1">
-        <h3 className="font-serif text-base md:text-lg font-normal text-foreground group-hover:text-muted-foreground transition-colors line-clamp-2">
+      <div className="space-y-1 px-1">
+        <h3 className="font-serif text-sm sm:text-base md:text-lg font-normal text-foreground group-hover:text-muted-foreground transition-colors line-clamp-2 leading-tight">
           {node.title}
         </h3>
-        <p className="text-sm text-foreground tracking-wide">
+        <p className="text-sm md:text-base font-medium text-foreground tracking-wide">
           {formatPrice(price.amount, price.currencyCode)}
         </p>
         <div className="flex items-center gap-1.5 text-green-600">
-          <Truck size={14} />
-          <span className="text-xs font-medium">Envío Gratis</span>
+          <Truck size={12} className="md:w-[14px] md:h-[14px]" />
+          <span className="text-[10px] md:text-xs font-medium">Envío Gratis</span>
         </div>
+      </div>
+
+      {/* Mobile Add to Cart button */}
+      <div className="md:hidden mt-3 px-1">
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full text-xs"
+          onClick={handleAddToCart}
+          disabled={isAdding || !firstVariant?.availableForSale}
+        >
+          {!firstVariant?.availableForSale ? 'Agotado' : isAdding ? 'Añadiendo...' : 'Añadir al Carrito'}
+        </Button>
       </div>
     </Link>
   );
