@@ -44,7 +44,7 @@ export const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 animate-fade-in-up"
             style={{ animationDelay: '800ms' }}
           >
-            <Link to="/restaurador">
+            <Link to="/productos">
               <Button variant="premium" size="lg">
                 Explorar Colección
               </Button>
