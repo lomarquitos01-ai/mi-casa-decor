@@ -111,42 +111,42 @@ const RestauradorPage = () => {
       
       <main>
         {/* Hero Section - Full Width Image with Overlay */}
-        <section className="relative min-h-[70vh] md:min-h-[90vh] flex items-center">
+        <section className="relative min-h-screen md:min-h-[90vh] flex items-end md:items-center pb-8 md:pb-0">
           <div className="absolute inset-0">
             <img
               src={heroImage}
               alt="Restaurador de Mármoles y Granitos"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-charcoal/95 via-charcoal/80 to-charcoal/40 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-charcoal/95 via-charcoal/80 to-charcoal/50 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
           </div>
           
-          <div className="relative container-wide py-16 md:py-24 pt-24 md:pt-24">
-            <div className="max-w-2xl space-y-4 md:space-y-8">
-              <p className="text-gold text-sm md:text-lg font-medium tracking-wide">
+          <div className="relative container-wide py-6 md:py-24 pt-28 md:pt-24 px-4 md:px-8">
+            <div className="max-w-2xl space-y-3 md:space-y-8">
+              <p className="text-gold text-xs sm:text-sm md:text-lg font-medium tracking-wide leading-relaxed">
                 ¿Cansado de ver su encimera, lavabo o porcelanato opaco y sin brillo?
               </p>
               
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-cream leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-cream leading-tight">
                 Mármoles y pisos brillando en{" "}
                 <span className="text-gold font-medium">15 segundos!</span>
               </h1>
               
-              <p className="text-base md:text-xl text-cream/80">
+              <p className="text-sm sm:text-base md:text-xl text-cream/80 leading-relaxed">
                 Con nuestro Restaurador de Mármoles y Granitos, ¡ya no tendrá ese problema!
               </p>
               
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-6 pt-2 md:pt-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6 pt-2 md:pt-4">
                 <div className="text-cream">
-                  <span className="text-2xl md:text-4xl font-light">37,99 €</span>
-                  <span className="text-base md:text-xl text-cream/60 line-through ml-2 md:ml-3">59,99 €</span>
+                  <span className="text-xl sm:text-2xl md:text-4xl font-light">37,99 €</span>
+                  <span className="text-sm sm:text-base md:text-xl text-cream/60 line-through ml-2 md:ml-3">59,99 €</span>
                   <span className="block text-xs md:text-sm text-cream/60 mt-1">160ml • Envío Gratis</span>
                 </div>
                 
                 <Button
                   onClick={handleAddToCart}
                   size="lg"
-                  className="w-full sm:w-auto px-6 md:px-10 py-5 md:py-6 text-base md:text-lg bg-gold hover:bg-gold/90 text-charcoal"
+                  className="w-full sm:w-auto px-6 md:px-10 py-4 md:py-6 text-sm sm:text-base md:text-lg bg-gold hover:bg-gold/90 text-charcoal"
                 >
                   <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   Añadir al Carrito
