@@ -25,29 +25,40 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const currencyCode = 'EUR';
 
   const handleCheckout = async () => {
-    console.log('🛒 CHECKOUT CLICKED - Function started');
-    alert('Checkout iniciado!'); // Alert para debug mobile
-    
     if (items.length === 0) {
       toast.error('El carrito está vacío');
       return;
     }
 
+    const toastId = toast.loading('Creando checkout...');
+
     try {
-      console.log('Creating checkout with items:', items.length);
       const checkoutUrl = await createCheckout();
-      console.log('Checkout URL:', checkoutUrl);
+      toast.dismiss(toastId);
       
       if (checkoutUrl) {
-        alert('Redirecionando para: ' + checkoutUrl); // Debug
-        window.location.href = checkoutUrl;
+        // Usar window.open para URLs externas - mais confiável
+        const newWindow = window.open(checkoutUrl, '_blank');
+        
+        // Fallback se popup foi bloqueado
+        if (!newWindow || newWindow.closed) {
+          // Criar link e clicar
+          const link = document.createElement('a');
+          link.href = checkoutUrl;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+        
+        toast.success('Checkout abierto en nueva pestaña');
       } else {
-        alert('URL não recebida');
         toast.error('Error al crear el checkout');
       }
     } catch (error) {
       console.error('Checkout error:', error);
-      alert('Erro: ' + error);
+      toast.dismiss(toastId);
       toast.error('Error al procesar el checkout');
     }
   };
