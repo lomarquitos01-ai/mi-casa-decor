@@ -2,6 +2,7 @@ import { X, Minus, Plus, Trash2, ExternalLink, Loader2, ShoppingBag } from 'luci
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import { formatPrice } from '@/lib/shopify-api';
+import { toast } from 'sonner';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -24,10 +25,19 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const currencyCode = 'EUR';
 
   const handleCheckout = async () => {
-    const checkoutUrl = await createCheckout();
-    if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank');
-      onClose();
+    try {
+      console.log('Iniciando checkout...');
+      const checkoutUrl = await createCheckout();
+      console.log('Checkout URL:', checkoutUrl);
+      if (checkoutUrl) {
+        window.open(checkoutUrl, '_blank');
+        onClose();
+      } else {
+        toast.error('Error al crear el checkout');
+      }
+    } catch (error) {
+      console.error('Error en checkout:', error);
+      toast.error('Error al procesar el checkout');
     }
   };
 
