@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useCartStore, CartItem } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -13,9 +13,9 @@ import specImage from "@/assets/products/restaurador-spec-2.jpg";
 const RestauradorPage = () => {
   const { addItem, openCart } = useCartStore();
 
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  // Scroll to top immediately before paint
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   const handleAddToCart = () => {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Header } from '@/components/Header';
@@ -34,9 +34,9 @@ const CategoryPage = () => {
   const categoryName = categorySlug ? categoryNames[categorySlug] || categorySlug : 'Categoría';
   const categoryDescription = categorySlug ? categoryDescriptions[categorySlug] || `Descubre nuestra colección de productos para ${categoryName.toLowerCase()}.` : '';
 
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  // Scroll to top immediately before paint
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [categorySlug]);
 
   return (
