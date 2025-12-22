@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { X, Minus, Plus, Trash2, ExternalLink, Loader2, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
@@ -10,6 +11,8 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
+  const [checkoutLink, setCheckoutLink] = useState<string | null>(null);
+  
   const {
     items,
     isLoading,
@@ -37,22 +40,8 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       toast.dismiss(toastId);
       
       if (checkoutUrl) {
-        // Usar window.open para URLs externas - mais confiável
-        const newWindow = window.open(checkoutUrl, '_blank');
-        
-        // Fallback se popup foi bloqueado
-        if (!newWindow || newWindow.closed) {
-          // Criar link e clicar
-          const link = document.createElement('a');
-          link.href = checkoutUrl;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-        
-        toast.success('Checkout abierto en nueva pestaña');
+        setCheckoutLink(checkoutUrl);
+        toast.success('¡Checkout listo! Haz clic en el enlace para continuar');
       } else {
         toast.error('Error al crear el checkout');
       }
@@ -188,30 +177,51 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               <p className="text-xs text-muted-foreground">
                 Impuestos y envío calculados en el checkout
               </p>
-              <Button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleCheckout();
-                }}
-                variant="premium"
-                size="lg"
-                className="w-full relative z-10"
-                disabled={items.length === 0 || isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Procesando...
-                  </>
-                ) : (
-                  <>
+              
+              {/* Link de checkout quando disponível */}
+              {checkoutLink ? (
+                <a
+                  href={checkoutLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
+                >
+                  <Button
+                    type="button"
+                    variant="premium"
+                    size="lg"
+                    className="w-full"
+                  >
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    Finalizar Compra
-                  </>
-                )}
-              </Button>
+                    Ir al Checkout
+                  </Button>
+                </a>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleCheckout();
+                  }}
+                  variant="premium"
+                  size="lg"
+                  className="w-full relative z-10"
+                  disabled={items.length === 0 || isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Procesando...
+                    </>
+                  ) : (
+                    <>
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Finalizar Compra
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
           )}
         </div>
