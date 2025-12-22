@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useCartStore, CartItem } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -11,6 +12,11 @@ import specImage from "@/assets/products/restaurador-spec-2.jpg";
 
 const RestauradorPage = () => {
   const { addItem, openCart } = useCartStore();
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleAddToCart = () => {
     const cartItem: CartItem = {

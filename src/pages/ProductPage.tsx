@@ -20,6 +20,11 @@ const ProductPage = () => {
 
   const { addItem, openCart } = useCartStore();
 
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [handle]);
+
   useEffect(() => {
     const loadProduct = async () => {
       if (!handle) return;
