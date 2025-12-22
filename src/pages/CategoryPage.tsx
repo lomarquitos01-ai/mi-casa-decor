@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Header } from '@/components/Header';
@@ -32,6 +33,11 @@ const CategoryPage = () => {
   const categorySlug = category || location.pathname.replace('/', '');
   const categoryName = categorySlug ? categoryNames[categorySlug] || categorySlug : 'Categoría';
   const categoryDescription = categorySlug ? categoryDescriptions[categorySlug] || `Descubre nuestra colección de productos para ${categoryName.toLowerCase()}.` : '';
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [categorySlug]);
 
   return (
     <div className="min-h-screen bg-background">
