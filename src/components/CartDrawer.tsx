@@ -25,29 +25,30 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const currencyCode = 'EUR';
 
   const handleCheckout = async () => {
-    console.log('=== CHECKOUT INICIADO ===');
-    console.log('Items no carrinho:', items.length);
-    
+    if (items.length === 0) {
+      toast.error('El carrito está vacío');
+      return;
+    }
+
+    // Mostrar loading imediatamente
+    const toastId = toast.loading('Creando checkout...');
+
     try {
-      console.log('Chamando createCheckout...');
       const checkoutUrl = await createCheckout();
-      console.log('Checkout URL recebida:', checkoutUrl);
       
       if (checkoutUrl) {
-        console.log('Redirecionando para:', checkoutUrl);
-        // Tentar múltiplas abordagens de redirecionamento
-        try {
-          window.location.assign(checkoutUrl);
-        } catch (e) {
-          console.log('location.assign falhou, tentando href:', e);
+        toast.dismiss(toastId);
+        // Redirecionar imediatamente - usar setTimeout para garantir que funcione em mobile
+        setTimeout(() => {
           window.location.href = checkoutUrl;
-        }
+        }, 100);
       } else {
-        console.error('Checkout URL é null ou undefined');
+        toast.dismiss(toastId);
         toast.error('Error al crear el checkout');
       }
     } catch (error) {
-      console.error('Erro no handleCheckout:', error);
+      console.error('Checkout error:', error);
+      toast.dismiss(toastId);
       toast.error('Error al procesar el checkout');
     }
   };
