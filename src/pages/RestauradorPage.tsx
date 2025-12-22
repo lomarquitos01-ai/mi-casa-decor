@@ -1,8 +1,9 @@
-import { useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Minus, Plus, Truck, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore, CartItem } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { Check, Droplets, Shield, Sparkles, Clock, ShoppingCart } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import heroImage from "@/assets/products/restaurador-hero-2.jpg";
@@ -12,13 +13,24 @@ import specImage from "@/assets/products/restaurador-spec-2.jpg";
 
 const RestauradorPage = () => {
   const { addItem, openCart } = useCartStore();
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isAdding, setIsAdding] = useState(false);
 
-  // Scroll to top immediately before paint
+  const images = [
+    { url: heroImage, alt: "Restaurador de Mármoles y Granitos" },
+    { url: protectionImage, alt: "Protección y brillo" },
+    { url: usageImage, alt: "Modo de uso" },
+    { url: specImage, alt: "Especificaciones" },
+  ];
+
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   const handleAddToCart = () => {
+    setIsAdding(true);
+    
     const cartItem: CartItem = {
       product: {
         node: {
@@ -58,270 +70,200 @@ const RestauradorPage = () => {
       variantId: "gid://shopify/ProductVariant/56303403401548",
       variantTitle: "160ml",
       price: { amount: "37.99", currencyCode: "EUR" },
-      quantity: 1,
+      quantity,
       selectedOptions: [{ name: "Tamaño", value: "160ml" }]
     };
 
     addItem(cartItem);
-    toast.success("Producto añadido al carrito", {
-      description: "Restaurador de Mármoles y Granitos - 160ml",
+    toast.success("Añadido al carrito", {
+      description: `Restaurador de Mármoles y Granitos x ${quantity}`,
       position: "top-center",
     });
     openCart();
+    setTimeout(() => setIsAdding(false), 500);
   };
 
   const benefits = [
-    "Seguro y perfecto para la limpieza diaria.",
-    "Elimina suciedad, polvo, derrames y grasa de su granito sellado, mármol y otras superficies de piedra natural.",
-    "Mantiene su piso limpio y protegido.",
-    "Elimina con seguridad grasa, suciedad y marcas sin dejar residuos.",
-    "Pulido fuerte y duradero.",
-    "Nuestra fórmula con pH balanceado mantendrá el sellado de su piedra sin deteriorarse y brillante por mucho tiempo.",
-  ];
-
-  const usageSteps = [
-    "Limpie la superficie y manténgala seca",
-    "Aplique con una toalla y espere que seque",
-    "Uso superpuesto para aumentar la dureza",
-    "Esperar 24 horas sin mojar la superficie",
-  ];
-
-  const applications = [
-    "Granito sellado",
-    "Mármol",
-    "Travertino",
-    "Caliza",
-    "Pizarra",
-    "Baldosa",
-    "Muebles de madera maciza",
+    "Seguro y perfecto para la limpieza diaria",
+    "Elimina suciedad, polvo, derrames y grasa",
+    "Mantiene su piso limpio y protegido",
+    "Pulido fuerte y duradero",
+    "Fórmula con pH balanceado",
+    "Resultados profesionales en 15 segundos",
   ];
 
   const specifications = [
     { label: "Composición", value: "Nano silicona" },
-    { label: "Área de uso", value: "1 botella puede cubrir 3 a 5m²" },
+    { label: "Área de uso", value: "3 a 5m² por botella" },
     { label: "Capacidad", value: "160ml" },
-    { label: "Color del producto", value: "Transparente" },
-    { label: "Vida útil", value: "3 años (cerrado), protección 3 a 5 años" },
-    { label: "Almacenamiento", value: "Lugar fresco y seco" },
+    { label: "Color", value: "Transparente" },
+    { label: "Vida útil", value: "3 años (cerrado)" },
+    { label: "Protección", value: "3 a 5 años" },
+  ];
+
+  const applications = [
+    "Granito", "Mármol", "Travertino", "Caliza", "Pizarra", "Baldosa", "Madera"
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      <main>
-        {/* Hero Section - Full Width Image with Overlay */}
-        <section className="relative min-h-[100svh] md:min-h-[90vh] flex items-end md:items-center pb-8 md:pb-0">
-          <div className="absolute inset-0">
-            <img
-              src={heroImage}
-              alt="Restaurador de Mármoles y Granitos"
-              className="w-full h-full object-cover object-[center_30%] md:object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-charcoal/95 via-charcoal/70 to-charcoal/30 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
-          </div>
-          
-          <div className="relative container-wide py-6 md:py-24 pt-28 md:pt-24 px-4 md:px-8">
-            <div className="max-w-2xl space-y-3 md:space-y-8">
-              <p className="text-gold text-xs sm:text-sm md:text-lg font-medium tracking-wide leading-relaxed">
-                ¿Cansado de ver su encimera, lavabo o porcelanato opaco y sin brillo?
-              </p>
-              
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-cream leading-tight">
-                Mármoles y pisos brillando en{" "}
-                <span className="text-gold font-medium">15 segundos!</span>
-              </h1>
-              
-              <p className="text-sm sm:text-base md:text-xl text-cream/80 leading-relaxed">
-                Con nuestro Restaurador de Mármoles y Granitos, ¡ya no tendrá ese problema!
-              </p>
-              
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6 pt-2 md:pt-4">
-                <div className="text-cream">
-                  <span className="text-xl sm:text-2xl md:text-4xl font-light">37,99 €</span>
-                  <span className="text-sm sm:text-base md:text-xl text-cream/60 line-through ml-2 md:ml-3">59,99 €</span>
-                  <span className="block text-xs md:text-sm text-cream/60 mt-1">160ml • Envío Gratis</span>
-                </div>
-                
-                <Button
-                  onClick={handleAddToCart}
-                  size="lg"
-                  className="w-full sm:w-auto px-6 md:px-10 py-4 md:py-6 text-sm sm:text-base md:text-lg bg-gold hover:bg-gold/90 text-charcoal"
-                >
-                  <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                  Añadir al Carrito
-                </Button>
+      <main className="pt-24 md:pt-32 pb-16 md:pb-20">
+        <div className="container-wide px-4 md:px-6">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 md:mb-8"
+          >
+            <ArrowLeft size={16} />
+            Volver
+          </Link>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-20">
+            {/* Images */}
+            <div className="space-y-3 md:space-y-4">
+              <div className="aspect-square md:aspect-[4/5] bg-muted overflow-hidden rounded-lg md:rounded-none">
+                <img
+                  src={images[selectedImageIndex].url}
+                  alt={images[selectedImageIndex].alt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
+                {images.map((img, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`w-16 h-20 md:w-20 md:h-24 flex-shrink-0 bg-muted overflow-hidden border-2 transition-colors rounded-md md:rounded-none ${
+                      selectedImageIndex === index ? 'border-foreground' : 'border-transparent'
+                    }`}
+                  >
+                    <img
+                      src={img.url}
+                      alt={img.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Benefits Section */}
-        <section className="py-12 md:py-20 bg-cream">
-          <div className="container-wide">
-            <div className="text-center mb-8 md:mb-16">
-              <Sparkles className="w-8 h-8 md:w-12 md:h-12 text-gold mx-auto mb-3 md:mb-4" />
-              <h2 className="text-2xl md:text-4xl font-light text-charcoal">Beneficios</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {benefits.map((benefit, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 md:gap-4 p-4 md:p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <Check className="w-5 h-5 md:w-6 md:h-6 text-gold flex-shrink-0 mt-0.5" />
-                  <p className="text-sm md:text-base text-charcoal/80">{benefit}</p>
+            {/* Product Info */}
+            <div className="space-y-5 md:space-y-6">
+              <div>
+                <p className="text-xs md:text-sm text-muted-foreground uppercase tracking-wider mb-2">
+                  Cuidado Profesional
+                </p>
+                <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-wide mb-3 md:mb-4">
+                  Restaurador de Mármoles y Granitos
+                </h1>
+                <div className="flex items-baseline gap-3">
+                  <p className="font-serif text-xl md:text-2xl">37,99 €</p>
+                  <p className="text-sm md:text-base text-muted-foreground line-through">59,99 €</p>
+                  <span className="text-xs md:text-sm text-green-600 font-medium">-37%</span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                <div className="flex items-center gap-2 mt-2 md:mt-3 text-green-600">
+                  <Truck size={16} className="md:w-[18px] md:h-[18px]" />
+                  <span className="text-xs md:text-sm font-medium">Envío Gratis</span>
+                </div>
+              </div>
 
-        {/* Water Repellent Section - Full Width Image */}
-        <section className="relative py-16 md:py-32">
-          <div className="absolute inset-0">
-            <img
-              src={protectionImage}
-              alt="Alta protección y brillo"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-l from-charcoal/95 via-charcoal/80 to-charcoal/60 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
-          </div>
-          
-          <div className="relative container-wide">
-            <div className="max-w-xl md:ml-auto md:text-right">
-              <Droplets className="w-8 h-8 md:w-12 md:h-12 text-gold md:ml-auto mb-4 md:mb-6" />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-cream mb-4 md:mb-6">
-                Buena repelencia al agua y manchas
-              </h2>
-              <p className="text-base md:text-xl text-cream/80 mb-6 md:mb-8">
-                Después del recubrimiento, se forma una película protectora y la superficie
-                tiene un efecto repelente al agua, aceite y manchas.
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                Restaurador profesional de nano silicona para mármoles, granitos y superficies de piedra natural. 
+                Proporciona protección duradera contra agua, aceite y manchas.
               </p>
-              
-              <div className="space-y-3">
-                <h3 className="text-gold font-medium mb-3 md:mb-4">Para uso en:</h3>
-                <div className="flex flex-wrap md:justify-end gap-2">
+
+              {/* Size */}
+              <div className="space-y-2 md:space-y-3">
+                <label className="text-caption text-xs md:text-sm">Tamaño</label>
+                <div className="flex flex-wrap gap-2">
+                  <button className="px-3 md:px-4 py-1.5 md:py-2 border text-xs md:text-sm tracking-wide transition-colors border-foreground bg-foreground text-background">
+                    160ml
+                  </button>
+                </div>
+              </div>
+
+              {/* Quantity */}
+              <div className="space-y-2 md:space-y-3">
+                <label className="text-caption text-xs md:text-sm">Cantidad</label>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center border border-border">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center hover:bg-muted transition-colors"
+                    >
+                      <Minus size={14} className="md:w-4 md:h-4" />
+                    </button>
+                    <span className="w-10 md:w-12 text-center text-sm md:text-base">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center hover:bg-muted transition-colors"
+                    >
+                      <Plus size={14} className="md:w-4 md:h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add to Cart */}
+              <Button
+                variant="premium"
+                size="lg"
+                className="w-full py-5 md:py-6 text-sm md:text-base"
+                onClick={handleAddToCart}
+                disabled={isAdding}
+              >
+                {isAdding ? 'Añadiendo...' : 'Añadir al Carrito'}
+              </Button>
+
+              {/* Benefits */}
+              <div className="pt-4 md:pt-6 border-t border-border">
+                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Beneficios</h3>
+                <div className="grid grid-cols-1 gap-2">
+                  {benefits.map((benefit, index) => (
+                    <div key={index} className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
+                      <Check size={14} className="text-green-600 flex-shrink-0" />
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Applications */}
+              <div className="pt-4 md:pt-6 border-t border-border">
+                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Superficies compatibles</h3>
+                <div className="flex flex-wrap gap-2">
                   {applications.map((app, index) => (
                     <span
                       key={index}
-                      className="px-3 md:px-4 py-1.5 md:py-2 bg-cream/10 backdrop-blur-sm rounded-full text-xs md:text-sm text-cream border border-cream/20"
+                      className="px-3 py-1.5 bg-muted text-xs md:text-sm rounded-full"
                     >
                       {app}
                     </span>
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Usage Section - Full Width Image */}
-        <section className="relative py-16 md:py-32">
-          <div className="absolute inset-0">
-            <img
-              src={usageImage}
-              alt="Modo de uso"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-charcoal/95 via-charcoal/80 to-charcoal/60 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
-          </div>
-          
-          <div className="relative container-wide">
-            <div className="max-w-xl">
-              <Clock className="w-8 h-8 md:w-12 md:h-12 text-gold mb-4 md:mb-6" />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-cream mb-6 md:mb-10">
-                Modo de Uso
-              </h2>
-              
-              <div className="space-y-3 md:space-y-4">
-                {usageSteps.map((step, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-cream/10 backdrop-blur-sm rounded-lg border border-cream/20"
-                  >
-                    <span className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gold flex items-center justify-center text-charcoal font-bold flex-shrink-0 text-sm md:text-base">
-                      {index + 1}
-                    </span>
-                    <p className="text-sm md:text-base text-cream">{step}</p>
-                  </div>
-                ))}
+              {/* Specifications */}
+              <div className="pt-4 md:pt-6 border-t border-border">
+                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Especificaciones</h3>
+                <div className="space-y-2">
+                  {specifications.map((spec, index) => (
+                    <div key={index} className="flex justify-between text-xs md:text-sm">
+                      <span className="text-muted-foreground">{spec.label}</span>
+                      <span>{spec.value}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              
-              <p className="text-xs md:text-sm text-cream/60 mt-4 md:mt-6 italic">
-                * Para aumentar la duración, repita el paso 2 después de media hora de intervalo.
-              </p>
-            </div>
-          </div>
-        </section>
 
-        {/* Specifications Section - Full Width Image */}
-        <section className="relative py-16 md:py-32">
-          <div className="absolute inset-0">
-            <img
-              src={specImage}
-              alt="Especificaciones del producto"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-l from-charcoal/95 via-charcoal/80 to-charcoal/60 md:from-charcoal/90 md:via-charcoal/70 md:to-transparent" />
-          </div>
-          
-          <div className="relative container-wide">
-            <div className="max-w-xl md:ml-auto">
-              <Shield className="w-8 h-8 md:w-12 md:h-12 text-gold md:ml-auto mb-4 md:mb-6" />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-cream md:text-right mb-6 md:mb-10">
-                Especificaciones
-              </h2>
-              
-              <div className="space-y-2 md:space-y-3 bg-cream/10 backdrop-blur-sm rounded-lg p-4 md:p-6 border border-cream/20">
-                {specifications.map((spec, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center py-2 md:py-3 border-b border-cream/20 last:border-0 gap-4"
-                  >
-                    <span className="text-xs md:text-base text-cream/70">{spec.label}</span>
-                    <span className="text-xs md:text-base text-cream font-medium text-right">{spec.value}</span>
-                  </div>
-                ))}
+              <div className="pt-4 md:pt-6 border-t border-border text-xs md:text-sm text-muted-foreground">
+                <p>Devoluciones gratuitas en 30 días</p>
               </div>
-              
-              <p className="text-cream/70 mt-4 md:mt-6 md:text-right text-xs md:text-sm">
-                El paquete incluye: 1 frasco de Nano Restaurador de Mármoles y Granitos.
-              </p>
             </div>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-charcoal">
-          <div className="container-narrow text-center space-y-6 md:space-y-8 px-4">
-            <Sparkles className="w-10 h-10 md:w-16 md:h-16 text-gold mx-auto" />
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-cream">
-              ¿Listo para restaurar el brillo de sus superficies?
-            </h2>
-            <p className="text-base md:text-xl text-cream/70">
-              Obtenga resultados profesionales en solo 15 segundos.
-            </p>
-            
-            <div className="flex flex-col items-center justify-center gap-4 pt-2 md:pt-4">
-              <div className="text-cream">
-                <span className="text-2xl md:text-3xl font-light">37,99 €</span>
-                <span className="text-base md:text-lg text-cream/60 line-through ml-2">59,99 €</span>
-              </div>
-              <Button
-                onClick={handleAddToCart}
-                size="lg"
-                className="w-full sm:w-auto px-8 md:px-12 py-5 md:py-6 text-base md:text-lg bg-gold hover:bg-gold/90 text-charcoal"
-              >
-                <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                Comprar Ahora
-              </Button>
-            </div>
-          </div>
-        </section>
+        </div>
       </main>
-
       <Footer />
     </div>
   );
