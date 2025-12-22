@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import heroImage from '@/assets/hero-living.jpg';
 
 export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center">
-      {/* Background with gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sand-light via-cream to-sand">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="Interior de salón minimalista con sofá crema y decoración elegante"
+          className="w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent" />
       </div>
 
@@ -38,14 +44,9 @@ export const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 animate-fade-in-up"
             style={{ animationDelay: '800ms' }}
           >
-            <Link to="/coleccion">
+            <Link to="/restaurador">
               <Button variant="premium" size="lg">
                 Explorar Colección
-              </Button>
-            </Link>
-            <Link to="/nosotros">
-              <Button variant="premium-outline" size="lg">
-                Nuestra Historia
               </Button>
             </Link>
           </div>
