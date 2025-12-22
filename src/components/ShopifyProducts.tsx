@@ -3,8 +3,26 @@ import { fetchProducts, ShopifyProduct } from '@/lib/shopify-api';
 import { ProductCard } from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-export const ShopifyProducts = () => {
+interface ShopifyProductsProps {
+  category?: string;
+  showHeader?: boolean;
+  limit?: number;
+}
+
+// Mapeamento de categorias para queries do Shopify
+const categoryQueries: Record<string, string> = {
+  cocina: 'product_type:Cocina OR tag:cocina',
+  organizacion: 'product_type:Organización OR tag:organizacion',
+  decoracion: 'product_type:Decoración OR tag:decoracion',
+  mesa: 'product_type:Mesa OR tag:mesa',
+  bano: 'product_type:Baño OR tag:bano',
+  iluminacion: 'product_type:Iluminación OR tag:iluminacion',
+  limpieza: 'product_type:Limpieza OR tag:limpieza',
+};
+
+export const ShopifyProducts = ({ category, showHeader = true, limit = 12 }: ShopifyProductsProps) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -13,7 +31,8 @@ export const ShopifyProducts = () => {
     const loadProducts = async () => {
       try {
         setIsLoading(true);
-        const data = await fetchProducts(12);
+        const query = category ? categoryQueries[category] : undefined;
+        const data = await fetchProducts(limit, query);
         setProducts(data);
       } catch (err) {
         console.error('Error al cargar productos:', err);
@@ -24,7 +43,7 @@ export const ShopifyProducts = () => {
     };
 
     loadProducts();
-  }, []);
+  }, [category, limit]);
 
   if (isLoading) {
     return (
@@ -73,23 +92,27 @@ export const ShopifyProducts = () => {
   }
 
   return (
-    <section className="section-spacing bg-sand-light">
-      <div className="container-wide">
+    <section className={showHeader ? "section-spacing bg-sand-light" : ""}>
+      <div className={showHeader ? "container-wide" : ""}>
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div>
-            <p className="text-caption mb-3">Colección</p>
-            <h2 className="heading-section text-foreground">
-              Nuestros Productos
-            </h2>
+        {showHeader && (
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div>
+              <p className="text-caption mb-3">Colección</p>
+              <h2 className="heading-section text-foreground">
+                Nuestros Productos
+              </h2>
+            </div>
+            <Link to="/productos">
+              <Button variant="premium-outline" size="default">
+                Ver Todos
+              </Button>
+            </Link>
           </div>
-          <Button variant="premium-outline" size="default">
-            Ver Todos
-          </Button>
-        </div>
+        )}
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {products.map((product, index) => (
             <ProductCard key={product.node.id} product={product} index={index} />
           ))}
