@@ -58,12 +58,12 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-50 transition-opacity"
+          className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40 transition-opacity"
           onClick={onClose}
         />
       )}
 
-      {/* Drawer */}
+      {/* Drawer - z-index maior que overlay */}
       <div
         className={`fixed top-0 right-0 h-full w-full sm:max-w-md bg-background z-50 shadow-2xl transform transition-transform duration-300 ease-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -179,10 +179,15 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 Impuestos y envío calculados en el checkout
               </p>
               <Button
-                onClick={handleCheckout}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleCheckout();
+                }}
                 variant="premium"
                 size="lg"
-                className="w-full"
+                className="w-full relative z-10"
                 disabled={items.length === 0 || isLoading}
               >
                 {isLoading ? (
