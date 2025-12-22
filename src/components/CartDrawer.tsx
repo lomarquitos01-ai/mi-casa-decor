@@ -28,6 +28,10 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   // Criar checkout diretamente aqui, sem usar o store
   const handleCreateCheckout = async () => {
+    console.log('=== CHECKOUT START ===');
+    console.log('Items count:', items.length);
+    console.log('Items:', JSON.stringify(items.map(i => ({ variantId: i.variantId, qty: i.quantity }))));
+    
     if (items.length === 0) {
       toast.error('El carrito está vacío');
       return;
@@ -41,17 +45,25 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
         quantity: item.quantity,
       }));
       
+      console.log('Calling createStorefrontCheckout with:', JSON.stringify(checkoutItems));
+      
       const url = await createStorefrontCheckout(checkoutItems);
+      
+      console.log('Checkout URL received:', url);
       
       if (url) {
         setCheckoutUrl(url);
-        toast.success('¡Checkout creado! Haz clic para continuar');
+        toast.success('¡Checkout creado!', {
+          description: 'Haz clic en "Ir al Checkout" para continuar',
+          duration: 5000,
+        });
       } else {
+        console.error('No URL returned');
         toast.error('Error al crear el checkout');
       }
     } catch (error) {
-      console.error('Error creating checkout:', error);
-      toast.error('Error al procesar el checkout');
+      console.error('Checkout error:', error);
+      toast.error('Error: ' + (error instanceof Error ? error.message : 'Unknown error'));
     } finally {
       setIsCreatingCheckout(false);
     }
