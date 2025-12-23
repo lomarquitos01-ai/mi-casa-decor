@@ -18,10 +18,10 @@ const RestauradorPage = () => {
   const [isAdding, setIsAdding] = useState(false);
 
   const images = [
-    { url: heroImage, alt: "Restaurador de Mármores e Granitos" },
-    { url: protectionImage, alt: "Proteção e brilho" },
+    { url: heroImage, alt: "Restaurador de Mármoles y Granitos" },
+    { url: protectionImage, alt: "Protección y brillo" },
     { url: usageImage, alt: "Modo de uso" },
-    { url: specImage, alt: "Especificações" },
+    { url: specImage, alt: "Especificaciones" },
   ];
 
   useLayoutEffect(() => {
@@ -35,10 +35,10 @@ const RestauradorPage = () => {
       product: {
         node: {
           id: "gid://shopify/Product/15474385453388",
-          title: "Restaurador de Mármores e Granitos Nano Cristal",
-          description: "Restaurador profissional para mármores, granitos e superfícies de pedra natural",
+          title: "Restaurador de Mármoles y Granitos Nano Cristal",
+          description: "Restaurador profesional para mármoles, granitos y superficies de piedra natural",
           handle: "restaurador-de-marmol-y-granito-nano-cristal",
-          productType: "Limpeza",
+          productType: "Limpieza",
           priceRange: {
             minVariantPrice: {
               amount: "37.99",
@@ -49,7 +49,7 @@ const RestauradorPage = () => {
             edges: [{
               node: {
                 url: heroImage,
-                altText: "Restaurador de Mármores e Granitos"
+                altText: "Restaurador de Mármoles y Granitos"
               }
             }]
           },
@@ -60,23 +60,23 @@ const RestauradorPage = () => {
                 title: "160ml",
                 price: { amount: "37.99", currencyCode: "EUR" },
                 availableForSale: true,
-                selectedOptions: [{ name: "Tamanho", value: "160ml" }]
+                selectedOptions: [{ name: "Tamaño", value: "160ml" }]
               }
             }]
           },
-          options: [{ name: "Tamanho", values: ["160ml"] }]
+          options: [{ name: "Tamaño", values: ["160ml"] }]
         }
       },
       variantId: "gid://shopify/ProductVariant/56303403401548",
       variantTitle: "160ml",
       price: { amount: "37.99", currencyCode: "EUR" },
       quantity,
-      selectedOptions: [{ name: "Tamanho", value: "160ml" }]
+      selectedOptions: [{ name: "Tamaño", value: "160ml" }]
     };
 
     addItem(cartItem);
-    toast.success("Produto adicionado ao carrinho", {
-      description: `Restaurador de Mármores e Granitos x ${quantity}`,
+    toast.success("Producto añadido al carrito", {
+      description: `Restaurador de Mármoles y Granitos x ${quantity}`,
       position: "top-center",
     });
     openCart();
@@ -84,33 +84,33 @@ const RestauradorPage = () => {
   };
 
   const benefits = [
-    "Seguro e perfeito para a limpeza diária",
-    "Remove sujeira, poeira, derrames e graxa de seu granito selado, mármore e outras superfícies de pedra natural",
-    "Mantém seu piso limpo e protegido",
-    "Remove com segurança graxa, sujeira e marcas sem deixar resíduos",
-    "Polimento forte e duradouro",
-    "Fórmula pH-balanceada mantém o selamento da sua pedra brilhante por um longo tempo",
+    "Seguro y perfecto para la limpieza diaria",
+    "Elimina suciedad, polvo, derrames y grasa de tu granito sellado, mármol y otras superficies de piedra natural",
+    "Mantiene tu suelo limpio y protegido",
+    "Elimina con seguridad grasa, suciedad y marcas sin dejar residuos",
+    "Pulido fuerte y duradero",
+    "Fórmula con pH equilibrado que mantiene el sellado de tu piedra brillante durante mucho tiempo",
   ];
 
   const specifications = [
-    { label: "Composição", value: "Nano silicone" },
-    { label: "Área de uso", value: "3 a 5m² por garrafa" },
-    { label: "Capacidade", value: "160ml" },
-    { label: "Cor", value: "Transparente" },
-    { label: "Validade", value: "3 anos (fechado)" },
-    { label: "Proteção", value: "3 a 5 anos" },
-    { label: "Armazenamento", value: "Local fresco e seco" },
+    { label: "Composición", value: "Nano silicona" },
+    { label: "Área de uso", value: "3 a 5m² por botella" },
+    { label: "Capacidad", value: "160ml" },
+    { label: "Color", value: "Transparente" },
+    { label: "Caducidad", value: "3 años (cerrado)" },
+    { label: "Protección", value: "3 a 5 años" },
+    { label: "Almacenamiento", value: "Lugar fresco y seco" },
   ];
 
   const applications = [
-    "Granito selado", "Mármore", "Travertino", "Calcário", "Ardósia", "Telha", "Madeira maciça"
+    "Granito sellado", "Mármol", "Travertino", "Piedra caliza", "Pizarra", "Baldosa", "Madera maciza"
   ];
 
   const usageSteps = [
-    "Limpe a superfície e mantenha seca",
-    "Aplique com uma toalha e espere secar",
-    "Uso sobreposto para aumentar a dureza",
-    "Aguardar 24 horas sem molhar a superfície",
+    "Limpia la superficie y mantenla seca",
+    "Aplica con una toalla y espera a que seque",
+    "Uso superpuesto para aumentar la dureza",
+    "Esperar 24 horas sin mojar la superficie",
   ];
 
   return (
@@ -123,7 +123,7 @@ const RestauradorPage = () => {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 md:mb-8"
           >
             <ArrowLeft size={16} />
-            Voltar
+            Volver
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-20">
@@ -160,13 +160,13 @@ const RestauradorPage = () => {
             <div className="space-y-5 md:space-y-6">
               <div>
                 <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
-                  Cansado de olhar para a pia, balcão ou até mesmo seu porcelanato e ver que está sem brilho, opaco e não quer ter o trabalho de trocar a peça?
+                  ¿Cansado de mirar el fregadero, la encimera o incluso tu porcelánico y ver que está sin brillo, opaco y no quieres tener el trabajo de cambiar la pieza?
                 </p>
                 <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-wide mb-2">
-                  Mármores e pisos brilhando em 15 segundos!
+                  ¡Mármoles y suelos brillando en 15 segundos!
                 </h1>
                 <p className="text-xs md:text-sm text-muted-foreground mb-4">
-                  Com nosso Restaurador de Mármores e Granitos, você não terá mais esse problema!
+                  ¡Con nuestro Restaurador de Mármoles y Granitos, ya no tendrás ese problema!
                 </p>
                 <div className="flex items-baseline gap-3">
                   <p className="font-serif text-xl md:text-2xl">37,99 €</p>
@@ -175,13 +175,13 @@ const RestauradorPage = () => {
                 </div>
                 <div className="flex items-center gap-2 mt-2 md:mt-3 text-green-600">
                   <Truck size={16} className="md:w-[18px] md:h-[18px]" />
-                  <span className="text-xs md:text-sm font-medium">Envio Grátis</span>
+                  <span className="text-xs md:text-sm font-medium">Envío Gratis</span>
                 </div>
               </div>
 
               {/* Size */}
               <div className="space-y-2 md:space-y-3">
-                <label className="text-caption text-xs md:text-sm">Tamanho</label>
+                <label className="text-caption text-xs md:text-sm">Tamaño</label>
                 <div className="flex flex-wrap gap-2">
                   <button className="px-3 md:px-4 py-1.5 md:py-2 border text-xs md:text-sm tracking-wide transition-colors border-foreground bg-foreground text-background">
                     160ml
@@ -191,7 +191,7 @@ const RestauradorPage = () => {
 
               {/* Quantity */}
               <div className="space-y-2 md:space-y-3">
-                <label className="text-caption text-xs md:text-sm">Quantidade</label>
+                <label className="text-caption text-xs md:text-sm">Cantidad</label>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center border border-border">
                     <button
@@ -219,12 +219,12 @@ const RestauradorPage = () => {
                 onClick={handleAddToCart}
                 disabled={isAdding}
               >
-                {isAdding ? 'Adicionando...' : 'Adicionar ao Carrinho'}
+                {isAdding ? 'Añadiendo...' : 'Añadir al Carrito'}
               </Button>
 
               {/* Benefits */}
               <div className="pt-4 md:pt-6 border-t border-border">
-                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Benefícios</h3>
+                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Beneficios</h3>
                 <div className="grid grid-cols-1 gap-2">
                   {benefits.map((benefit, index) => (
                     <div key={index} className="flex items-start gap-2 text-xs md:text-sm text-muted-foreground">
@@ -237,15 +237,15 @@ const RestauradorPage = () => {
 
               {/* Water Repellent */}
               <div className="pt-4 md:pt-6 border-t border-border">
-                <h3 className="text-sm md:text-base font-medium mb-2">Boa repelência à água e manchas</h3>
+                <h3 className="text-sm md:text-base font-medium mb-2">Buena repelencia al agua y las manchas</h3>
                 <p className="text-xs md:text-sm text-muted-foreground">
-                  Após o revestimento, uma película protetora é formada e a superfície tem um efeito repelente à água, óleo e manchas.
+                  Tras el revestimiento, se forma una película protectora y la superficie tiene un efecto repelente al agua, aceite y manchas.
                 </p>
               </div>
 
               {/* Applications */}
               <div className="pt-4 md:pt-6 border-t border-border">
-                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Para uso em</h3>
+                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Para uso en</h3>
                 <div className="flex flex-wrap gap-2">
                   {applications.map((app, index) => (
                     <span
@@ -272,13 +272,13 @@ const RestauradorPage = () => {
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground mt-3 italic">
-                  * Repita a etapa 2 para aumentar a duração (aguarde meia hora de intervalo).
+                  * Repite el paso 2 para aumentar la duración (espera media hora de intervalo).
                 </p>
               </div>
 
               {/* Specifications */}
               <div className="pt-4 md:pt-6 border-t border-border">
-                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Especificações</h3>
+                <h3 className="text-sm md:text-base font-medium mb-3 md:mb-4">Especificaciones</h3>
                 <div className="space-y-2">
                   {specifications.map((spec, index) => (
                     <div key={index} className="flex justify-between text-xs md:text-sm">
@@ -288,12 +288,12 @@ const RestauradorPage = () => {
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  O pacote inclui: 1 frasco de Nano Restaurador de Mármores e Granitos.
+                  El paquete incluye: 1 frasco de Nano Restaurador de Mármoles y Granitos.
                 </p>
               </div>
 
               <div className="pt-4 md:pt-6 border-t border-border text-xs md:text-sm text-muted-foreground">
-                <p>Devoluções gratuitas em 30 dias</p>
+                <p>Devoluciones gratuitas en 30 días</p>
               </div>
             </div>
           </div>
