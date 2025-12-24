@@ -6,10 +6,11 @@ import { useCartStore, CartItem } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import heroImage from "@/assets/products/restaurador-hero-2.jpg";
-import protectionImage from "@/assets/products/restaurador-protection-2.jpg";
-import usageImage from "@/assets/products/restaurador-usage-2.jpg";
-import specImage from "@/assets/products/restaurador-spec-2.jpg";
+import image1 from "@/assets/products/restaurador-1.png";
+import image2 from "@/assets/products/restaurador-2.png";
+import image3 from "@/assets/products/restaurador-3.png";
+import image4 from "@/assets/products/restaurador-4.png";
+import image5 from "@/assets/products/restaurador-5.png";
 
 const RestauradorPage = () => {
   const { addItem, openCart } = useCartStore();
@@ -18,10 +19,11 @@ const RestauradorPage = () => {
   const [isAdding, setIsAdding] = useState(false);
 
   const images = [
-    { url: heroImage, alt: "Restaurador de Mármoles y Granitos" },
-    { url: protectionImage, alt: "Protección y brillo" },
-    { url: usageImage, alt: "Modo de uso" },
-    { url: specImage, alt: "Especificaciones" },
+    { url: image1, alt: "Restaurador de Mármoles y Granitos" },
+    { url: image2, alt: "Protección y brillo" },
+    { url: image3, alt: "Modo de uso" },
+    { url: image4, alt: "Especificaciones" },
+    { url: image5, alt: "Aplicación" },
   ];
 
   useLayoutEffect(() => {
@@ -48,7 +50,7 @@ const RestauradorPage = () => {
           images: {
             edges: [{
               node: {
-                url: heroImage,
+                url: image1,
                 altText: "Restaurador de Mármoles y Granitos"
               }
             }]
